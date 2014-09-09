@@ -179,8 +179,8 @@
 
     var rand = "1";
 
-    var vidSync1 = new VideoSync("8ptfyhBjXj8" + rand, "Player1");
-    var vidSync2 = new VideoSync("8ptfyhBjXj8" + rand, "Player2");
+    var vidSync1 = new VideoSync("cQmvXfhiOcY" + rand, "Player1");
+    var vidSync2 = new VideoSync("cQmvXfhiOcY" + rand, "Player2");
 
     var player1;
     var player2;
@@ -188,14 +188,14 @@
     function onYouTubeIframeAPIReady() {
       
 
-      player2 = new YT.Player('player2', {
+      player1 = new YT.Player('player1', {
         height: '390',
         width: '640',
-        videoId: '8ptfyhBjXj8',
+        videoId: 'cQmvXfhiOcY',
         playerVars: playerVars,
         events: {
-          'onReady': vidSync2.onPlayerReady,
-          'onStateChange': vidSync2.onPlayerStateChange
+          'onReady': vidSync1.onPlayerReady,
+          'onStateChange': vidSync1.onPlayerStateChange
         }
       });
     }
@@ -207,7 +207,7 @@
     });
 
     pubnub.subscribe({
-      channel: "8ptfyhBjXj8" + rand,
+      channel: "cQmvXfhiOcY" + rand,
       callback: consolePrint
     });
   </script>
