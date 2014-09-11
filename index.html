@@ -24,7 +24,7 @@
   <!--[if lt IE 9]> <script src="/static/js/ie.js?ts=1404164785"></script> <![endif]-->
 
   
- 
+
 </head>
 
 <body id="app" class="satemplate" data-ember-extension="1">
@@ -32,26 +32,26 @@
 
   <div id="alert_container" class="alert  hidden"></div>
   <style media="screen">
-    a[name=tutorial]:before {
-      content: "";
-      display: block;
-      height: 100px;
-      /* fixed header height*/
-      margin: -100px 0 0;
-      /* negative fixed header height */
-    }
-    #app-hero {
-      background: white;
-      background-attachment: fixed;
-    }
-    #demo {
-      background: white;
-      background-attachment: fixed;
-    }
-    .code {
-      font-family: "Courier New", Courier, monospace;
-      font-size: 15px;
-    }
+  a[name=tutorial]:before {
+    content: "";
+    display: block;
+    height: 100px;
+    /* fixed header height*/
+    margin: -100px 0 0;
+    /* negative fixed header height */
+  }
+  #app-hero {
+    background: white;
+    background-attachment: fixed;
+  }
+  #demo {
+    background: white;
+    background-attachment: fixed;
+  }
+  .code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 15px;
+  }
   </style>
 
 
@@ -82,12 +82,17 @@
 
 
 
- 
+
   <footer>
-  
+
   </footer>
 
   
+  <!-- inserting query field -->
+  <form name="myForm" onsubmit="return updateYID()" method="post">
+    Youtube ID: <input type="text" name="yid">
+    <input type="submit" value="Submit">
+  </form>
 
   <script src="./assets/pubnub.min.js"></script>
   <script src="./assets/main.js"></script>
@@ -96,67 +101,89 @@
   <script src="./videosync.js"></script>
 
   <script>
-    var consolePrint = function(msg) {
-      var divId = "channel1";
-      if (msg.sender === "Player2") {
-        divId = "channel2";
-      }
-      var time = msg.time;
-      if (time === null) {
-        $("#" + divId).prepend("{type: " + msg.type + "}<br>");
-      }
-      else {
-        $("#" + divId).prepend("{type: " + msg.type + ", time: " + time + "}<br>");
-      }
-    };
 
-    var tag = document.createElement('script');
 
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  <!--
+    var youtubeID = 'WcsoO__cnLU';
+   alert(youtubeID);
 
-    var playerVars = {
-      modestbranding: 1,
-      theme: 'light',
-      showinfo: 0,
-      rel: 0,
-      fs: 0
-    };
+  function updateYID() {
+    var x = document.forms["myForm"]["yid"].value;
+    if (x==null || x=="") {
+      alert("youtube id must be filled out");
 
-    var rand = "1";
-
-    var vidSync1 = new VideoSync("cQmvXfhiOcY" + rand, "Player1");
-    var vidSync2 = new VideoSync("cQmvXfhiOcY" + rand, "Player2");
-
-    var player1;
-    var player2;
-
-    function onYouTubeIframeAPIReady() {
-      
-
-      player1 = new YT.Player('player1', {
-        height: '390',
-        width: '640',
-        videoId: 'cQmvXfhiOcY',
-        playerVars: playerVars,
-        events: {
-          'onReady': vidSync1.onPlayerReady,
-          'onStateChange': vidSync1.onPlayerStateChange
-        }
-      });
+      return false;
     }
+      youtubeID = x;
+      alert(youtubeID);
+     document.location.reload(true);
 
-    var pubnub = PUBNUB.init({
-      publish_key: 'pub-c-242fbbf1-4cc6-4153-8f20-a671697f15ec',
-      subscribe_key: 'sub-c-2361676c-1e85-11e4-bbbf-02ee2ddab7fe',
-      uuid: "the watcher"
-    });
+  }
+  -->
 
-    pubnub.subscribe({
-      channel: "cQmvXfhiOcY" + rand,
-      callback: consolePrint
+
+
+  var consolePrint = function(msg) {
+    var divId = "channel1";
+    if (msg.sender === "Player2") {
+      divId = "channel2";
+    }
+    var time = msg.time;
+    if (time === null) {
+      $("#" + divId).prepend("{type: " + msg.type + "}<br>");
+    }
+    else {
+      $("#" + divId).prepend("{type: " + msg.type + ", time: " + time + "}<br>");
+    }
+  };
+
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var playerVars = {
+    modestbranding: 1,
+    theme: 'light',
+    showinfo: 0,
+    rel: 0,
+    fs: 0
+  };
+
+  var rand = "1";
+
+  var vidSync1 = new VideoSync(youtubeID + rand, "Player1");
+  var vidSync2 = new VideoSync(youtubeID + rand, "Player2");
+
+  var player1;
+  var player2;
+
+  function onYouTubeIframeAPIReady() {
+
+
+    player1 = new YT.Player('player1', {
+      height: '390',
+      width: '640',
+      videoId: youtubeID,
+      playerVars: playerVars,
+      events: {
+        'onReady': vidSync1.onPlayerReady,
+        'onStateChange': vidSync1.onPlayerStateChange
+      }
     });
+  }
+
+  var pubnub = PUBNUB.init({
+    publish_key: 'pub-c-242fbbf1-4cc6-4153-8f20-a671697f15ec',
+    subscribe_key: 'sub-c-2361676c-1e85-11e4-bbbf-02ee2ddab7fe',
+    uuid: "the watcher"
+  });
+
+  pubnub.subscribe({
+    channel: youtubeID + rand,
+    callback: consolePrint
+  });
   </script>
 
 <!--
@@ -168,33 +195,31 @@
     </div>
   </div>
 -->
-  <script type="text/javascript">
-    /* <![CDATA[ */
-    var google_conversion_id = 1009365105;
-    var google_custom_params = window.google_tag_params;
-    var google_remarketing_only = true;
-    /* ]]> */
-  </script>
-  <script type="text/javascript" src="./assets/conversion.js">
-  </script>
- 
-  <noscript>
-    &lt;div style="display:inline;"&gt; &lt;img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1009365105/?value=0&amp;amp;guid=ON&amp;amp;script=0"/&gt; &lt;/div&gt;
-  </noscript>
-  <script type="text/javascript">
-    var bf_url = "pubnub";
-    (function () {
-      var e = document.createElement("script");
-      e.type = "text/javascript";
-      e.async = !0;
-      e.src = "//d2sdf28wg0skh3.cloudfront.net/bf.min.js";
-      var t = document.getElementsByTagName("script")[0];
-      t.parentNode.insertBefore(e, t)
-    })();
-  </script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1009365105;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="./assets/conversion.js">
+</script>
 
 
-  <script type="text/javascript" src="chrome-extension://bmdblncegkenkacieihfhpjfppoconhi/in-page-script.js"></script>
+<script type="text/javascript">
+var bf_url = "pubnub";
+(function () {
+  var e = document.createElement("script");
+  e.type = "text/javascript";
+  e.async = !0;
+  e.src = "//d2sdf28wg0skh3.cloudfront.net/bf.min.js";
+  var t = document.getElementsByTagName("script")[0];
+  t.parentNode.insertBefore(e, t)
+})();
+</script>
+
+
+<script type="text/javascript" src="chrome-extension://bmdblncegkenkacieihfhpjfppoconhi/in-page-script.js"></script>
 </body>
 
 </html>
