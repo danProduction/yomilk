@@ -187,7 +187,7 @@
   var rand = "1";
 
 
-  var vidSync2 = new VideoSync("WcsoO__cnLU" + rand, "Player2");
+  var vidSync2 = new VideoSync("sx5Gir_fbSo" + rand, "Player2");
 
   var player1;
   var player2;
@@ -198,7 +198,7 @@
     player2 = new YT.Player('player2', {
       height: '390',
       width: '640',
-      videoId: 'WcsoO__cnLU',
+      videoId: 'sx5Gir_fbSo',
       playerVars: playerVars,
       events: {
         'onReady': vidSync2.onPlayerReady,
@@ -214,7 +214,7 @@
   });
 
   pubnub.subscribe({
-    channel: "WcsoO__cnLU" + rand,
+    channel: "sx5Gir_fbSo" + rand,
     callback: consolePrint
   });
   </script>
