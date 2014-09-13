@@ -8,7 +8,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="google-site-verification" content="X-NyWbTQ-1CgZ7cvLZYPOc0BzO7PblJv201J3PJXAJI">
-
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+ 
 
   <title>VideoSync</title>
 
@@ -19,6 +20,13 @@
   <script type="text/javascript" async="" src="./assets/bf.min.js"></script>
   <script type="text/javascript" async="" src="./assets/ga.js"></script>
   <script src="./assets/30715011.js"></script>
+  <script src="js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+  <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+  <script src="js/jquery.easing.min.js"></script>
 
   
   <!--[if lt IE 9]> <script src="/static/js/ie.js?ts=1404164785"></script> <![endif]-->
@@ -55,7 +63,40 @@
   </style>
 
 
-  <div class="section padding-extra white" id="demo" style="margin-top: -100px; min-height: 0px;">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Start Bootstrap</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+
+  <div class="section padding-extra white" id="demo" style="margin-top: 100px; min-height: 0px;">
     <div id="wrap" style="margin: 0 auto; display: table; width: 1350px;">
       <div style="float: left; margin: 15px;">
         <div id="player1"></div>
@@ -105,7 +146,7 @@
 
   <!--
     var youtubeID = 'WcsoO__cnLU';
-   alert(youtubeID);
+
 
   function updateYID() {
     var x = document.forms["myForm"]["yid"].value;
@@ -153,8 +194,8 @@
 
   var rand = "1";
 
-  var vidSync1 = new VideoSync(youtubeID + rand, "Player1");
-  var vidSync2 = new VideoSync(youtubeID + rand, "Player2");
+  var vidSync1 = new VideoSync("WcsoO__cnLU" + rand, "Player1");
+  var vidSync2 = new VideoSync("WcsoO__cnLU" + rand, "Player2");
 
   var player1;
   var player2;
@@ -162,14 +203,14 @@
   function onYouTubeIframeAPIReady() {
 
 
-    player1 = new YT.Player('player1', {
+    player2 = new YT.Player('player2', {
       height: '390',
       width: '640',
-      videoId: youtubeID,
+      videoId: 'WcsoO__cnLU',
       playerVars: playerVars,
       events: {
-        'onReady': vidSync1.onPlayerReady,
-        'onStateChange': vidSync1.onPlayerStateChange
+        'onReady': vidSync2.onPlayerReady,
+        'onStateChange': vidSync2.onPlayerStateChange
       }
     });
   }
@@ -181,7 +222,7 @@
   });
 
   pubnub.subscribe({
-    channel: youtubeID + rand,
+    channel: "WcsoO__cnLU" + rand,
     callback: consolePrint
   });
   </script>
