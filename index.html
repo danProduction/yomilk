@@ -162,14 +162,14 @@
   function onYouTubeIframeAPIReady() {
 
 
-    player1 = new YT.Player('player1', {
+    player2 = new YT.Player('player2', {
       height: '390',
       width: '640',
       videoId: 'WcsoO__cnLU',
       playerVars: playerVars,
       events: {
-        'onReady': vidSync1.onPlayerReady,
-        'onStateChange': vidSync1.onPlayerStateChange
+        'onReady': vidSync2.onPlayerReady,
+        'onStateChange': vidSync2.onPlayerStateChange
       }
     });
   }
